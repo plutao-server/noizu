@@ -1,7 +1,6 @@
 package opensimplex
 
 import (
-	"fmt"
 	"math"
 	"math/big"
 )
@@ -83,7 +82,7 @@ func contribute(deltaX, deltaY, originX, originY, gridX, gridY float64, permsArr
 	var shiftedX = originX - deltaX - SQUISH*dxpy
 	var shiftedY = originY - deltaY - SQUISH*dxpy
 	var attenuation = 2.0 - getAttenuationFactor(shiftedX, shiftedY)
-	fmt.Println(attenuation)
+
 	if attenuation > 0.0 {
 		return math.Pow(attenuation, 4.0) * extrapolate(gridX+deltaX, gridY+deltaY, shiftedX, shiftedY, permsArray) // multiply with extrapolation
 	} else {
