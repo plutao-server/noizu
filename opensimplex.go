@@ -49,7 +49,7 @@ func (noizu *Noizu) Noise2D(x, y float64) float64 {
 	var insY = stretchY - gridY
 	var originX = x - squishedX
 	var originY = y - squishedY
-	println(contribute(1.0, 0.0, originX, originY, gridX, gridY, noizu.permsArray))
+
 	var value = contribute(1.0, 0.0, originX, originY, gridX, gridY, noizu.permsArray) + contribute(0.0, 1.0, originX, originY, gridX, gridY, noizu.permsArray) + evaluateInsideTriangle(insX, insY, originX, originY, gridX, gridY, noizu.permsArray)
 
 	return value / 47.0 //change 47 to smth else its a normalizing scalar
@@ -109,10 +109,13 @@ func generatePermutationsArray(seed big.Int) PermsArray {
 	for i := range source {
 		source[i] = int64(i)
 	}
+
 	seed = *seed.Add(seed.Mul(&seed, big.NewInt(6_364_136_223_846_793_005)), big.NewInt(1_442_695_040_888_963_407))
-	for i := range source {
+
+	for i := 2047; i > -1; i-- {
 		i := int64(i)
 		var r = seed.Mod(seed.Add(&seed, big.NewInt(31)), big.NewInt(i+1)).Int64()
+
 		if r < 0 {
 			r += i + 1
 		}
@@ -120,6 +123,7 @@ func generatePermutationsArray(seed big.Int) PermsArray {
 		source[r] = source[i]
 
 	}
+
 	return permsArray
 
 }
