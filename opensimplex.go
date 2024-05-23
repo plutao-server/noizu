@@ -49,7 +49,7 @@ func (noizu *Noizu) Noise2D(x, y float64) float64 {
 	var insY = stretchY - gridY
 	var originX = x - squishedX
 	var originY = y - squishedY
-	println(contribute(1.0, 0.0, originX, originY, gridX, gridY, noizu.permsArray))
+
 	var value = contribute(1.0, 0.0, originX, originY, gridX, gridY, noizu.permsArray) + contribute(0.0, 1.0, originX, originY, gridX, gridY, noizu.permsArray) + evaluateInsideTriangle(insX, insY, originX, originY, gridX, gridY, noizu.permsArray)
 
 	return value / 47.0 //change 47 to smth else its a normalizing scalar
