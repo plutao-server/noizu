@@ -1,29 +1,32 @@
 package opensimplex
 
 import (
-	"math/big"
+	"image"
+	"image/color"
+	"image/png"
 	"os"
-	"strconv"
 	"testing"
 )
 
 func TestNoise2D(t *testing.T) {
-	var noiseList string = ""
-	var noizu = NewNoise(*big.NewInt(2423423555))
-	for i := 0; i <= 100; i++ {
-		for j := 0; j <= 50; j++ {
+	var noizu = NewNoise(21312312313)
+	var HEIGHT = 1024
+	var WIDTH = 1024
+	img := image.NewAlpha(image.Rect(0, 0, WIDTH, HEIGHT))
+	for i := 0; i <= WIDTH; i++ {
+		for j := 0; j <= HEIGHT; j++ {
 
-			var noise = noizu.Noise2D(float64(i)/100.0, float64(j)/50.0)
-			noiseList += strconv.FormatFloat(noise, 'f', -1, 64) + "\n"
+			var noise = noizu.Noise2D(float64(i)/float64(WIDTH), float64(j)/float64(HEIGHT))
+			img.SetAlpha(i, j, color.Alpha{A: uint8(noise * 127.0)})
 
 		}
 	}
 
-	f, err := os.Create("./noises.txt")
+	f, err := os.Create("./noise.png")
 	if err != nil {
 		panic(err)
 	}
 
-	f.WriteString(noiseList)
-	f.Sync()
+	png.Encode(f, img)
+
 }
