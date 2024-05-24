@@ -9,7 +9,7 @@ import (
 )
 
 func TestNoise2D(t *testing.T) {
-	var noizu = NewNoise(21312312313)
+	var noizu = NewNoise(2342342)
 	var HEIGHT = 1024
 	var WIDTH = 1024
 	img := image.NewAlpha(image.Rect(0, 0, WIDTH, HEIGHT))
